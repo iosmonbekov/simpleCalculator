@@ -1,7 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,700&display=swap");
 .container {
   max-width: 600px;
   margin: 0px auto;
   padding: 10px;
+  font-family: "Roboto";
 }
 .buttons {
   display: flex;
@@ -40,4 +42,9 @@ button {
 }
 .operators button {
   flex: 0 1 100%;
+}
+.result {
+  position: relative;
+  top: 95px;
+  margin-left: 10px;
 }
