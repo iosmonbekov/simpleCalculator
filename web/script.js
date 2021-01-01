@@ -1,67 +1,78 @@
 let list = [];
+let nums = [];
+let ops = [];
+
+let number = "";
 
 const button = document.getElementsByTagName("button");
 const display = document.querySelector(".display");
 const result = document.querySelector(".result");
-console.log(result);
 
 for (let i = 0; i < button.length; i++) {
   if (button[i].innerText === "E") {
     button[i].onclick = reset;
+  } else if (button[i].innerText === "=") {
+    button[i].onclick = answer;
+  } else if (isNaN(+button[i].innerText)) {
+    button[i].onclick = work;
   } else {
     button[i].onclick = addToList;
   }
 }
 
-button[11].onclick = answer;
+function work() {
+  list.push(this.innerHTML);
+  ops.push(this.innerHTML);
+  nums.push(number);
+  number = "";
+  display.innerHTML = list.join("");
+}
 
 function addToList() {
+  result.innerHTML = "";
   list.push(this.innerHTML);
+  number = number + this.innerHTML;
   display.innerHTML = list.join("");
 }
 
 function reset() {
+  result.innerHTML = "";
   list.length = 0;
+  ops.length = 0;
+  nums.length = 0;
+  number = "";
   display.innerHTML = list.join("");
 }
+
 function answer() {
+  nums.push(number);
   for (let i = 0; i < list.length; i++) {
-    if (
-      (list[i] === "+" ||
-        list[i] === "-" ||
-        list[i] === "*" ||
-        list[i] === "/") &&
-      (list[i + 1] === "+" ||
-        list[i + 1] === "-" ||
-        list[i + 1] === "*" ||
-        list[i + 1] === "/")
-    ) {
+    if (isNaN(+list[i]) && isNaN(+list[i + 1])) {
       reset();
       return;
     }
   }
-  list.push("+");
-  let num1, num2, temp;
-  let begin = 0;
-  let k = 0;
-  for (let i = 0; i < list.length; i++) {
-    if (
-      list[i] === "+" ||
-      list[i] === "-" ||
-      list[i] === "*" ||
-      list[i] === "/"
-    ) {
-      if (k === 0) {
-        num1 = +list.slice(begin, i).join("");
-        begin = i + 1;
-        k++;
-      } else {
-        num2 = +list.slice(begin, i).join("");
-        k = 0;
-      }
+  let temp = nums[0];
+  let o = 1;
+  for (let i = 0; i < ops.length; i++) {
+    switch (ops[i]) {
+      case "+":
+        temp = +temp + +nums[o];
+        o++;
+        break;
+      case "-":
+        temp = +temp - +nums[o];
+        o++;
+        break;
+      case "*":
+        temp = +temp * +nums[o];
+        o++;
+        break;
+      default:
+        temp = +temp / +nums[o];
+        o++;
     }
   }
-  temp = num1 + num2;
   reset();
   result.innerHTML = "Answer is: " + temp;
 }

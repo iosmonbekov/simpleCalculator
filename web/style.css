@@ -4,6 +4,7 @@
   margin: 0px auto;
   padding: 10px;
   font-family: "Roboto";
+  position: relative;
 }
 .buttons {
   display: flex;
@@ -44,7 +45,9 @@ button {
   flex: 0 1 100%;
 }
 .result {
-  position: relative;
-  top: 95px;
-  margin-left: 10px;
+  position: absolute;
+  top: 85px;
+  right: 0;
+  margin-right: 20px;
+  font-size: 24px;
 }
